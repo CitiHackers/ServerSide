@@ -2,6 +2,8 @@ from flask import Flask
 from flaskext.mysql import MySQL
 import requests
 from controller import postData
+from controller import sortList
+
 app = Flask(__name__)
 mysql = MySQL()
 
@@ -21,10 +23,11 @@ with mysql.connect().cursor() as cursor:
 def post():
     max_price, location = postData.get_parameters()
     data = postData.list_data(max_price, location, cursor)
+    sorted_data = sortList.sort_property_list(data, location)
     url = 'http://localhost:8000/'
     headers = {'Content-type': 'text/html; charset=UTF-8'}
-    requests.post(url, data=data, headers=headers)
-    return data
+    requests.post(url, data=sorted_data, headers=headers)
+    return sorted_data
 
 
 if __name__ == '__main__':
