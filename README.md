@@ -1,4 +1,4 @@
-# backend
+# Server Side (Backend)
 Backend code for citi hackerthon 
 
 # Setup MySQL
