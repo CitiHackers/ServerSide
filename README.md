@@ -18,3 +18,7 @@ Backend code for citi hackerthon
 4. run `python run.py` to run server see whether there will be `Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
 ` appears in cmd or Terminal
 5. To run it daemonly, using `nohup python run.py &` command instead
+
+# List Sorting Algorithm
+1. Currently we use the distance from selected 0 - 10 km around and sorted with distance from near to far
+2. In the future versions, we can support the functionality that users can choose their preferred sorting 

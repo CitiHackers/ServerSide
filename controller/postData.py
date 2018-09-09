@@ -23,7 +23,7 @@ def get_parameters():
 def list_data (max_price, location, cursor):
     latitude = location(0)
     longitude = location(1)
-    query = "SELECT H.NAME, H.PRICE FROM CITI.HOUSE AS H WHERE H.PRICE <= %s AND H.LATITUDE = %s AND H.LONGITUDE = %s ORDERED BY H.PRICE DESCENDING" % (max_price, latitude, longitude)
+    query = "SELECT H.NAME, H.PRICE FROM CITI.HOUSE AS H WHERE H.PRICE <= %f AND H.LATITUDE <= %f + 1 AND H.LATITUDE >= %f - 1 AND H.LONGITUDE >= %f - 1 AND H.LONGITUDE <= %f + 1" % (max_price, latitude, latitude, longitude, longitude)
     cursor.execute(query)
     r = [dict((cursor.description[i][0], value)
               for i, value in enumerate(row)) for row in cursor.fetchall()]

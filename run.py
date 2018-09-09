@@ -19,6 +19,7 @@ mysql.init_app(app)
 with mysql.connect().cursor() as cursor:
     cursor.execute(open("DB_script/schema.sql", "r").read())
 
+
 @app.route('/post_data', methods=['GET', 'POST'])
 def post():
     max_price, location = postData.get_parameters()
