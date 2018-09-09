@@ -1,26 +1,30 @@
-from flask import Flask, jsonify
+from flask import Flask
 from flaskext.mysql import MySQL
 import requests
 from controller import postData
-
 app = Flask(__name__)
 mysql = MySQL()
 
+
 # MySQL configurations
 app.config['MYSQL_DATABASE_USER'] = 'root'
-app.config['MYSQL_DATABASE_PASSWORD'] = 'admin'
+app.config['MYSQL_DATABASE_PASSWORD'] = ''
 app.config['MYSQL_DATABASE_DB'] = 'citi'
 app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 
 mysql.init_app(app)
 
-@app.route('/postData', methods=['GET', 'POST'])
+with mysql.connect().cursor() as cursor:
+    cursor.execute(open("DB_script/schema.sql", "r").read())
+
+@app.route('/post_data', methods=['GET', 'POST'])
 def post():
-    maxPrice, location = postData.getParameters()
-    data = postData.listData(maxPrice, location)
+    max_price, location = postData.get_parameters()
+    data = postData.list_data(max_price, location, cursor)
     url = 'http://localhost:8000/'
     headers = {'Content-type': 'text/html; charset=UTF-8'}
     requests.post(url, data=data, headers=headers)
+    return data
 
 
 if __name__ == '__main__':
